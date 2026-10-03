@@ -1,4 +1,4 @@
-﻿package skid.ykow.module.modules.donut;
+package skid.ykow.module.modules.donut;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;

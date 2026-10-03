@@ -1,4 +1,4 @@
-﻿package skid.ykow.module.modules.crystal;
+package skid.ykow.module.modules.crystal;
 
 import skid.ykow.event.EventListener;
 import skid.ykow.event.events.PreItemUseEvent;

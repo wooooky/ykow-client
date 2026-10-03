@@ -1,4 +1,4 @@
-﻿package skid.ykow;
+package skid.ykow;
 
 import net.fabricmc.api.ModInitializer;
 

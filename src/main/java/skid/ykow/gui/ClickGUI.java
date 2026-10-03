@@ -1,4 +1,4 @@
-﻿package skid.ykow.gui;
+package skid.ykow.gui;
 
 import skid.ykow.gui.components.BlocksBox;
 import skid.ykow.gui.components.BlocksFilter;
@@ -38,6 +38,8 @@ import java.util.stream.Collectors;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.util.math.RotationAxis;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -262,9 +264,9 @@ public final class ClickGUI extends Screen {
       );
       int titleX = this.guiX + 20 + 8;
       int titleY = this.guiY + 24;
-      RenderUtils.renderCircle(context.getMatrices(), ACCENT_PRIMARY, titleX + 12, titleY + 12, 12.0, 16);
-      RenderUtils.renderCircle(context.getMatrices(), ACCENT_GLOW, titleX + 12, titleY + 12, 8.0, 16);
-      TextRenderer.drawString("GYPSY", context, titleX + 38, titleY + 3, TEXT_PRIMARY.getRGB());
+      RenderUtils.renderCircle(context.getMatrices(), ACCENT_PRIMARY, titleX + 12, titleY + 12, 12.0, 32);
+      RenderUtils.renderCircle(context.getMatrices(), ACCENT_GLOW, titleX + 12, titleY + 12, 8.0, 32);
+      TextRenderer.drawString("YKOW", context, titleX + 38, titleY + 3, TEXT_PRIMARY.getRGB());
       TextRenderer.drawString("CLIENT", context, titleX + 38, titleY + 14, TEXT_MUTED.getRGB());
       int versionX = titleX + 130;
       int versionY = titleY + 5;
@@ -286,8 +288,7 @@ public final class ClickGUI extends Screen {
          ? new Color(ERROR.getRed(), ERROR.getGreen(), ERROR.getBlue(), 120)
          : new Color(BG_ELEVATED.getRed(), BG_ELEVATED.getGreen(), BG_ELEVATED.getBlue(), 100);
       RenderUtils.renderRoundedQuadShader(context.getMatrices(), closeBg, closeX, btnY, 36.0, 36.0, 10.0, 60.0);
-      Color textColor = closeHovered ? TEXT_PRIMARY : TEXT_SECONDARY;
-      TextRenderer.drawCenteredString("✕", context, closeX + 18, btnY + 11, textColor.getRGB());
+      this.renderXIcon(context, closeX + 18, btnY + 18, 12.0, 2.5, closeHovered ? TEXT_PRIMARY : TEXT_SECONDARY);
    }
 
    private void renderSidebar(DrawContext context, int mouseX, int mouseY, float delta) {
@@ -331,9 +332,9 @@ public final class ClickGUI extends Screen {
          int iconX = btnX + 22;
          int iconY = contentY + 25;
          Color iconColor = isSelected ? ACCENT_GLOW : TEXT_MUTED;
-         RenderUtils.renderCircle(context.getMatrices(), iconColor, iconX, iconY, 7.0, 16);
+         RenderUtils.renderCircle(context.getMatrices(), iconColor, iconX, iconY, 7.0, 32);
          if (isSelected) {
-            RenderUtils.renderCircle(context.getMatrices(), new Color(255, 255, 255, 100), iconX, iconY, 4.0, 12);
+            RenderUtils.renderCircle(context.getMatrices(), new Color(255, 255, 255, 100), iconX, iconY, 4.0, 24);
          }
 
          int textX = iconX + 20;
@@ -380,7 +381,7 @@ public final class ClickGUI extends Screen {
 
       int iconX = searchX + 18;
       int iconY = searchY + 20;
-      TextRenderer.drawString("\ud83d\udd0d", context, iconX, iconY, TEXT_SECONDARY.getRGB());
+      this.renderSearchIcon(context, iconX, iconY, TEXT_SECONDARY);
       String displayText = this.searchQuery.isEmpty() ? "Search modules..." : this.searchQuery;
       Color textColor = this.searchQuery.isEmpty() ? TEXT_DIM : TEXT_PRIMARY;
       int textX = iconX + 32;
@@ -398,8 +399,65 @@ public final class ClickGUI extends Screen {
          boolean clearHovered = this.isPointInRect(mouseX, mouseY, clearX, clearY, 28, 28);
          Color clearBg = clearHovered ? new Color(ERROR.getRed(), ERROR.getGreen(), ERROR.getBlue(), 100) : BG_ELEVATED;
          RenderUtils.renderRoundedQuadShader(context.getMatrices(), clearBg, clearX, clearY, 28.0, 28.0, 8.0, 50.0);
-         TextRenderer.drawCenteredString("✕", context, clearX + 14, clearY + 8, TEXT_SECONDARY.getRGB());
+         this.renderXIcon(context, clearX + 14, clearY + 14, 10.0, 2.5, TEXT_SECONDARY);
       }
+   }
+
+   private void renderSearchIcon(DrawContext context, int x, int y, Color color) {
+      RenderUtils.renderCircle(context.getMatrices(), color, x + 8, y + 8, 6.0, 32);
+      RenderUtils.renderCircle(context.getMatrices(), BG_DEEP, x + 8, y + 8, 3.5, 32);
+      MatrixStack ms = context.getMatrices();
+      ms.push();
+      ms.translate(x + 14.5F, y + 14.5F, 0.0F);
+      ms.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(-45.0F));
+      RenderUtils.renderRoundedQuad(ms, color, -1.5, -4.5, 1.5, 4.5, 1.5, 1.5, 1.5, 1.5, 12.0);
+      ms.pop();
+   }
+
+   private void renderBar(MatrixStack ms, Color color, double len, double thick) {
+      double r = thick / 2.0;
+      RenderUtils.renderRoundedQuad(ms, color, -len / 2.0, -thick / 2.0, len / 2.0, thick / 2.0, r, r, r, r, 24.0);
+   }
+
+   private void renderXIcon(DrawContext context, double cx, double cy, double size, double thick, Color color) {
+      MatrixStack ms = context.getMatrices();
+      ms.push();
+      ms.translate((float) cx, (float) cy, 0.0F);
+      ms.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(45.0F));
+      this.renderBar(ms, color, size, thick);
+      ms.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(90.0F));
+      this.renderBar(ms, color, size, thick);
+      ms.pop();
+   }
+
+   private void renderChevron(DrawContext context, double x, double y, double size, double thick, Color color, boolean left) {
+      double dir = left ? 1.0 : -1.0;
+      double arm = size * 0.75;
+      MatrixStack ms = context.getMatrices();
+      ms.push();
+      ms.translate((float) x, (float) y, 0.0F);
+      ms.push();
+      ms.translate((float) (dir * arm * -0.28), (float) (-arm * 0.28), 0.0F);
+      ms.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(left ? -45.0F : 45.0F));
+      this.renderBar(ms, color, arm, thick);
+      ms.pop();
+      ms.push();
+      ms.translate((float) (dir * arm * -0.28), (float) (arm * 0.28), 0.0F);
+      ms.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(left ? 45.0F : -45.0F));
+      this.renderBar(ms, color, arm, thick);
+      ms.pop();
+      ms.pop();
+   }
+
+   private void renderEditIcon(DrawContext context, double x, double y, Color color) {
+      MatrixStack ms = context.getMatrices();
+      ms.push();
+      ms.translate((float) x, (float) y, 0.0F);
+      ms.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(-45.0F));
+      this.renderBar(ms, color, 10.0, 3.0);
+      RenderUtils.renderRoundedQuad(ms, color, 3.0, -1.5, 7.5, 1.5, 1.0, 1.0, 1.0, 1.0, 12.0);
+      RenderUtils.renderCircle(ms, color, 8.5, 0.0, 1.4, 16);
+      ms.pop();
    }
 
    private void renderModulesGrid(DrawContext context, int x, int y, int width, int height, int mouseX, int mouseY, float delta) {
@@ -459,14 +517,21 @@ public final class ClickGUI extends Screen {
             if (enabled) {
                int pulseAlpha = 20 + (int)(15.0 * Math.sin(this.globalTime * 4.0F));
                RenderUtils.renderCircle(
-                  context.getMatrices(), new Color(SUCCESS.getRed(), SUCCESS.getGreen(), SUCCESS.getBlue(), pulseAlpha), statusX, statusY, 10.0, 16
+                  context.getMatrices(), new Color(SUCCESS.getRed(), SUCCESS.getGreen(), SUCCESS.getBlue(), pulseAlpha), statusX, statusY, 10.0, 32
                );
             }
 
-            RenderUtils.renderCircle(context.getMatrices(), statusColor, statusX, statusY, 6.0, 16);
+            RenderUtils.renderCircle(context.getMatrices(), statusColor, statusX, statusY, 6.0, 32);
             int nameX = statusX + 20;
             int nameY = cardY + liftOffset + 15;
-            TextRenderer.drawString(module.getName().toString(), context, nameX, nameY, TEXT_PRIMARY.getRGB());
+            String moduleName = module.getName().toString();
+            if (TextRenderer.getWidth(moduleName) > cardW - 58) {
+               while (TextRenderer.getWidth(moduleName + "...") > cardW - 58 && moduleName.length() > 1) {
+                  moduleName = moduleName.substring(0, moduleName.length() - 1);
+               }
+               moduleName += "...";
+            }
+            TextRenderer.drawString(moduleName, context, nameX, nameY, TEXT_PRIMARY.getRGB());
             String desc = module.getDescription().toString();
             int descMaxW = cardW - 32;
             if (TextRenderer.getWidth(desc) > descMaxW) {
@@ -512,12 +577,12 @@ public final class ClickGUI extends Screen {
       int knobSize = 20;
       float knobX = enabled ? x + switchW - knobSize - 3 : x + 3;
       Color knobShadow = new Color(0, 0, 0, 40);
-      RenderUtils.renderCircle(context.getMatrices(), knobShadow, knobX + knobSize / 2.0F + 1.0F, y + switchH / 2.0F + 1.0F, knobSize / 2.0F + 1.0F, 16);
+      RenderUtils.renderCircle(context.getMatrices(), knobShadow, knobX + knobSize / 2.0F + 1.0F, y + switchH / 2.0F + 1.0F, knobSize / 2.0F + 1.0F, 32);
       Color knobColor = enabled ? new Color(248, 250, 252) : new Color(203, 213, 225);
-      RenderUtils.renderCircle(context.getMatrices(), knobColor, knobX + knobSize / 2.0F, y + switchH / 2.0F, knobSize / 2.0F, 20);
+      RenderUtils.renderCircle(context.getMatrices(), knobColor, knobX + knobSize / 2.0F, y + switchH / 2.0F, knobSize / 2.0F, 32);
       if (highlighted || enabled) {
          Color highlight = new Color(255, 255, 255, enabled ? 120 : 60);
-         RenderUtils.renderCircle(context.getMatrices(), highlight, knobX + knobSize / 2.0F - 2.0F, y + switchH / 2.0F - 2.0F, 4.0, 12);
+         RenderUtils.renderCircle(context.getMatrices(), highlight, knobX + knobSize / 2.0F - 2.0F, y + switchH / 2.0F - 2.0F, 4.0, 24);
       }
    }
 
@@ -531,7 +596,7 @@ public final class ClickGUI extends Screen {
       context.fill(panelX + slideOffset, panelY, panelX + slideOffset + 1, panelY + panelH, DIVIDER.getRGB());
       int headerY = panelY + 20;
       int iconX = panelX + slideOffset + 20;
-      RenderUtils.renderCircle(context.getMatrices(), ACCENT_PRIMARY, iconX + 6, headerY + 8, 6.0, 12);
+      RenderUtils.renderCircle(context.getMatrices(), ACCENT_PRIMARY, iconX + 6, headerY + 8, 6.0, 32);
       String moduleName = this.selectedModule.getName().toString();
       int nameX = iconX + 20;
       TextRenderer.drawString(moduleName, context, nameX, headerY + 3, TEXT_PRIMARY.getRGB());
@@ -544,7 +609,7 @@ public final class ClickGUI extends Screen {
       boolean closeHovered = this.isPointInRect(mouseX, mouseY, closeX, headerY, 32, 32);
       Color closeBg = closeHovered ? new Color(ERROR.getRed(), ERROR.getGreen(), ERROR.getBlue(), 100) : BG_ELEVATED;
       RenderUtils.renderRoundedQuadShader(context.getMatrices(), closeBg, closeX, headerY, 32.0, 32.0, 10.0, 60.0);
-      TextRenderer.drawCenteredString("✕", context, closeX + 16, headerY + 10, TEXT_SECONDARY.getRGB());
+      this.renderXIcon(context, closeX + 16, headerY + 16, 11.0, 2.5, TEXT_SECONDARY);
       int settingsStartY = headerY + 70;
       int availableHeight = panelH - (settingsStartY - panelY) - 20;
       double scale = MinecraftClient.getInstance().getWindow().getScaleFactor();
@@ -620,7 +685,14 @@ public final class ClickGUI extends Screen {
       boolean hovered = this.isPointInRect(mouseX, mouseY, x, y, width, itemHeight);
       Color itemBg = hovered ? BG_HOVER : new Color(BG_CARD.getRed(), BG_CARD.getGreen(), BG_CARD.getBlue(), 120);
       RenderUtils.renderRoundedQuadShader(context.getMatrices(), itemBg, x, y, width, itemHeight, 10.0, 70.0);
-      TextRenderer.drawString(setting.getName().toString(), context, x + 14, y + 14, TEXT_SECONDARY.getRGB());
+      String settingName = setting.getName().toString();
+      while (TextRenderer.getWidth(settingName + "...") > width - 90 && settingName.length() > 1) {
+         settingName = settingName.substring(0, settingName.length() - 1);
+      }
+      if (!settingName.equals(setting.getName().toString())) {
+         settingName += "...";
+      }
+      TextRenderer.drawString(settingName, context, x + 14, y + 14, TEXT_SECONDARY.getRGB());
       if (setting instanceof BooleanSetting bool) {
          this.renderEnhancedSwitch(context, x + width - 60, y + 18, bool.getValue(), hovered);
       } else if (setting instanceof NumberSetting num) {
@@ -673,12 +745,12 @@ public final class ClickGUI extends Screen {
       boolean thumbHovered = Math.abs(mouseX - thumbX) < 10 && Math.abs(mouseY - thumbY) < 10;
       if (thumbHovered || this.isDraggingSlider) {
          RenderUtils.renderCircle(
-            context.getMatrices(), new Color(ACCENT_PRIMARY.getRed(), ACCENT_PRIMARY.getGreen(), ACCENT_PRIMARY.getBlue(), 40), thumbX, thumbY, 12.0, 16
+            context.getMatrices(), new Color(ACCENT_PRIMARY.getRed(), ACCENT_PRIMARY.getGreen(), ACCENT_PRIMARY.getBlue(), 40), thumbX, thumbY, 12.0, 32
          );
       }
 
-      RenderUtils.renderCircle(context.getMatrices(), ACCENT_PRIMARY, thumbX, thumbY, 8.0, 16);
-      RenderUtils.renderCircle(context.getMatrices(), new Color(255, 255, 255, 180), thumbX, thumbY, 4.0, 12);
+      RenderUtils.renderCircle(context.getMatrices(), ACCENT_PRIMARY, thumbX, thumbY, 8.0, 32);
+      RenderUtils.renderCircle(context.getMatrices(), new Color(255, 255, 255, 180), thumbX, thumbY, 4.0, 24);
    }
 
    private void renderMinMaxSetting(DrawContext context, int x, int y, int width, MinMaxSetting minMax, int mouseX, int mouseY, boolean hovered) {
@@ -705,10 +777,10 @@ public final class ClickGUI extends Screen {
       int maxX = sliderX + (int)(sliderW * maxProgress);
       RenderUtils.renderRoundedQuadShader(context.getMatrices(), ACCENT_PRIMARY, minX, sliderY, maxX - minX, sliderH, 3.0, 50.0);
       int thumbY = sliderY + sliderH / 2;
-      RenderUtils.renderCircle(context.getMatrices(), ACCENT_PRIMARY, minX, thumbY, 8.0, 16);
-      RenderUtils.renderCircle(context.getMatrices(), ACCENT_SECONDARY, maxX, thumbY, 8.0, 16);
-      RenderUtils.renderCircle(context.getMatrices(), new Color(255, 255, 255, 180), minX, thumbY, 4.0, 12);
-      RenderUtils.renderCircle(context.getMatrices(), new Color(255, 255, 255, 180), maxX, thumbY, 4.0, 12);
+      RenderUtils.renderCircle(context.getMatrices(), ACCENT_PRIMARY, minX, thumbY, 8.0, 32);
+      RenderUtils.renderCircle(context.getMatrices(), ACCENT_SECONDARY, maxX, thumbY, 8.0, 32);
+      RenderUtils.renderCircle(context.getMatrices(), new Color(255, 255, 255, 180), minX, thumbY, 4.0, 24);
+      RenderUtils.renderCircle(context.getMatrices(), new Color(255, 255, 255, 180), maxX, thumbY, 4.0, 24);
    }
 
    private void renderModeSetting(DrawContext context, int x, int y, int width, ModeSetting<?> mode, boolean hovered) {
@@ -719,8 +791,8 @@ public final class ClickGUI extends Screen {
       Color btnBg = hovered ? BG_HOVER : BG_ELEVATED;
       RenderUtils.renderRoundedQuadShader(context.getMatrices(), btnBg, btnX, btnY, btnW, 24.0, 8.0, 60.0);
       TextRenderer.drawCenteredString(modeName, context, btnX + btnW / 2, btnY + 8, ACCENT_PRIMARY.getRGB());
-      TextRenderer.drawString("‹", context, btnX + 6, btnY + 6, TEXT_MUTED.getRGB());
-      TextRenderer.drawString("›", context, btnX + btnW - 14, btnY + 6, TEXT_MUTED.getRGB());
+      this.renderChevron(context, btnX + 11, btnY + 12, 7.0, 2.2, TEXT_MUTED, true);
+      this.renderChevron(context, btnX + btnW - 11, btnY + 12, 7.0, 2.2, TEXT_MUTED, false);
    }
 
    private void renderBindSetting(DrawContext context, int x, int y, int width, BindSetting bind, boolean hovered) {
@@ -753,7 +825,7 @@ public final class ClickGUI extends Screen {
       Color btnBg = hovered ? BG_HOVER : BG_ELEVATED;
       RenderUtils.renderRoundedQuadShader(context.getMatrices(), btnBg, btnX, btnY, btnW, 24.0, 8.0, 60.0);
       TextRenderer.drawString(value, context, btnX + 12, btnY + 8, TEXT_SECONDARY.getRGB());
-      TextRenderer.drawString("✎", context, btnX + btnW - 20, btnY + 8, TEXT_MUTED.getRGB());
+      this.renderEditIcon(context, btnX + btnW - 16, btnY + 12, TEXT_MUTED);
    }
 
    private void renderColorSetting(DrawContext context, int x, int y, int width, ColorSetting color, boolean hovered) {

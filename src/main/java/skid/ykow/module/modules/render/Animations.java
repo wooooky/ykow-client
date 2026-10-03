@@ -1,4 +1,4 @@
-﻿package skid.ykow.module.modules.render;
+package skid.ykow.module.modules.render;
 
 import skid.ykow.module.Category;
 import skid.ykow.module.Module;

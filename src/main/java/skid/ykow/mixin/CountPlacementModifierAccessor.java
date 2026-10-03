@@ -1,4 +1,4 @@
-﻿package skid.ykow.mixin;
+package skid.ykow.mixin;
 
 import net.minecraft.util.math.intprovider.IntProvider;
 import net.minecraft.world.gen.placementmodifier.CountPlacementModifier;

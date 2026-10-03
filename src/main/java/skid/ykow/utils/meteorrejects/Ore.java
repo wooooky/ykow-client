@@ -1,4 +1,4 @@
-﻿package skid.ykow.utils.meteorrejects;
+package skid.ykow.utils.meteorrejects;
 
 import skid.ykow.mixin.CountPlacementModifierAccessor;
 import skid.ykow.mixin.HeightRangePlacementModifierAccessor;

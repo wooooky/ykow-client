@@ -1,4 +1,4 @@
-﻿package skid.ykow.manager;
+package skid.ykow.manager;
 
 import skid.ykow.Ykow;
 import skid.ykow.event.CancellableEvent;

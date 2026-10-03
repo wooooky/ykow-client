@@ -1,4 +1,4 @@
-﻿package skid.ykow.module.modules.combat;
+package skid.ykow.module.modules.combat;
 
 import skid.ykow.event.EventListener;
 import skid.ykow.event.events.TargetPoseEvent;

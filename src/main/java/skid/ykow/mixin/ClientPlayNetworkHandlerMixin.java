@@ -1,4 +1,4 @@
-﻿package skid.ykow.mixin;
+package skid.ykow.mixin;
 
 import skid.ykow.event.events.ChunkDataEvent;
 import skid.ykow.event.events.EntitySpawnEvent;

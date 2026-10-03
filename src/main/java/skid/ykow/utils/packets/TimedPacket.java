@@ -1,4 +1,4 @@
-﻿package skid.ykow.utils.packets;
+package skid.ykow.utils.packets;
 
 import net.minecraft.network.packet.Packet;
 

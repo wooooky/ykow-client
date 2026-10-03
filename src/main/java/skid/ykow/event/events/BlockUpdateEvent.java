@@ -1,4 +1,4 @@
-﻿package skid.ykow.event.events;
+package skid.ykow.event.events;
 
 public class BlockUpdateEvent {
 }

@@ -1,4 +1,4 @@
-﻿package skid.ykow.module.modules.client;
+package skid.ykow.module.modules.client;
 
 import com.sun.jna.Memory;
 import skid.ykow.gui.ClickGUI;

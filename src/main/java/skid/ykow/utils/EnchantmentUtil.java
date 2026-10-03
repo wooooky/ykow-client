@@ -1,4 +1,4 @@
-﻿package skid.ykow.utils;
+package skid.ykow.utils;
 
 import it.unimi.dsi.fastutil.objects.Object2IntArrayMap;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;

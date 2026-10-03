@@ -1,4 +1,4 @@
-﻿package skid.ykow.utils.packets;
+package skid.ykow.utils.packets;
 
 import skid.ykow.Ykow;
 import skid.ykow.mixin.IClientWorldMixin;

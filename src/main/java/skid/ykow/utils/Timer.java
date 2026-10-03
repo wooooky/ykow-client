@@ -1,4 +1,4 @@
-﻿package skid.ykow.utils;
+package skid.ykow.utils;
 
 public class Timer {
    public static final String PART = "!@#$%^&*()*+";

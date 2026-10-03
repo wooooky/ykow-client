@@ -1,4 +1,4 @@
-﻿package skid.ykow.utils;
+package skid.ykow.utils;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.systems.VertexSorter;

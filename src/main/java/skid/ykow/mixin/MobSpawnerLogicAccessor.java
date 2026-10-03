@@ -1,4 +1,4 @@
-﻿package skid.ykow.mixin;
+package skid.ykow.mixin;
 
 import net.minecraft.block.spawner.MobSpawnerEntry;
 import net.minecraft.block.spawner.MobSpawnerLogic;

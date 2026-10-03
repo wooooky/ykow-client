@@ -42,3 +42,23 @@ tasks.withType(JavaCompile).configureEach {
 java {
     targetCompatibility = JavaVersion.VERSION_17
 }
+
+// Syncs the built ykow jar into mods-pack/Mods, replacing any older ykow/gypsyy jar.
+// mods-pack/ is local staging (gitignored); it gets zipped only on release deploy.
+tasks.register("syncModsPack", Copy) {
+    dependsOn("remapJar")
+    from(layout.buildDirectory.dir("libs")) {
+        include("ykow-*.jar")
+    }
+    into(layout.projectDirectory.dir("mods-pack/Mods"))
+    doFirst {
+        def modsDir = file("mods-pack/Mods")
+        if (modsDir.exists()) {
+            modsDir.listFiles()?.findAll { it.name ==~ /(gypsyy|ykow)-.*\.jar/ }?.each { it.delete() }
+        } else {
+            modsDir.mkdirs()
+        }
+    }
+}
+
+tasks.named("build") { finalizedBy("syncModsPack") }

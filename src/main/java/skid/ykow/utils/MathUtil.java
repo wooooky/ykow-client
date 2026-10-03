@@ -1,4 +1,4 @@
-﻿package skid.ykow.utils;
+package skid.ykow.utils;
 
 public final class MathUtil {
    public static double roundToNearest(double value, double step) {

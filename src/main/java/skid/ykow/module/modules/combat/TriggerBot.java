@@ -1,4 +1,4 @@
-﻿package skid.ykow.module.modules.combat;
+package skid.ykow.module.modules.combat;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.decoration.EndCrystalEntity;

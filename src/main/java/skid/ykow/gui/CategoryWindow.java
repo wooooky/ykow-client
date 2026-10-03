@@ -1,4 +1,4 @@
-﻿package skid.ykow.gui;
+package skid.ykow.gui;
 
 import skid.ykow.module.modules.client.Ykow;
 import skid.ykow.gui.components.ModuleButton;

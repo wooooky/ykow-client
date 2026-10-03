@@ -1,4 +1,4 @@
-﻿package skid.ykow.utils;
+package skid.ykow.utils;
 
 import skid.ykow.module.modules.client.Ykow;
 

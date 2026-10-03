@@ -1,4 +1,4 @@
-﻿package skid.ykow.event;
+package skid.ykow.event;
 
 public enum Priority {
    HIGHEST(0),

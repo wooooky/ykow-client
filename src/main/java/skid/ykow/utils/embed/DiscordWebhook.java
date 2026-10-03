@@ -1,4 +1,4 @@
-﻿package skid.ykow.utils.embed;
+package skid.ykow.utils.embed;
 
 import java.awt.Color;
 import java.io.OutputStream;

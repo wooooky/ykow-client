@@ -1,4 +1,4 @@
-﻿package skid.ykow.mixin;
+package skid.ykow.mixin;
 
 import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.util.InputUtil.Key;

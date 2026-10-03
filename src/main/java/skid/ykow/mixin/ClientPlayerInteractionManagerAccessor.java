@@ -1,4 +1,4 @@
-﻿package skid.ykow.mixin;
+package skid.ykow.mixin;
 
 import net.minecraft.client.network.ClientPlayerInteractionManager;
 import org.spongepowered.asm.mixin.Mixin;

@@ -1,4 +1,4 @@
-﻿package skid.ykow.module.setting;
+package skid.ykow.module.setting;
 
 public abstract class Setting {
    private CharSequence name;

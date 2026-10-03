@@ -1,4 +1,4 @@
-﻿package skid.ykow.event.events;
+package skid.ykow.event.events;
 
 import skid.ykow.event.Event;
 import net.minecraft.client.util.math.MatrixStack;

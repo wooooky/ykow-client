@@ -1,4 +1,4 @@
-﻿package skid.ykow.module.setting;
+package skid.ykow.module.setting;
 
 import java.util.HashSet;
 import java.util.Set;

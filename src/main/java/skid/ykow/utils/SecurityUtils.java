@@ -1,4 +1,4 @@
-﻿package skid.ykow.utils;
+package skid.ykow.utils;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;

@@ -1,4 +1,4 @@
-﻿package skid.ykow.mixin;
+package skid.ykow.mixin;
 
 import net.minecraft.world.gen.heightprovider.HeightProvider;
 import net.minecraft.world.gen.placementmodifier.HeightRangePlacementModifier;

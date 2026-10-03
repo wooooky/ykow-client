@@ -1,4 +1,4 @@
-﻿package skid.ykow;
+package skid.ykow;
 
 import com.jagrosh.discordipc.IPCClient;
 import com.jagrosh.discordipc.IPCListener;

@@ -1,4 +1,4 @@
-﻿package skid.ykow.mixin;
+package skid.ykow.mixin;
 
 import com.mojang.authlib.GameProfile;
 import skid.ykow.event.events.SendMovementPacketsEvent;

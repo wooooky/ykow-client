@@ -1,4 +1,4 @@
-﻿package skid.ykow.module;
+package skid.ykow.module;
 
 import skid.ykow.utils.EncryptedString;
 

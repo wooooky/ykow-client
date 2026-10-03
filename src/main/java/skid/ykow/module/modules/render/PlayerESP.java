@@ -1,4 +1,4 @@
-﻿package skid.ykow.module.modules.render;
+package skid.ykow.module.modules.render;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import skid.ykow.event.EventListener;

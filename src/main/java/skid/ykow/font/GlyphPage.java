@@ -1,5 +1,6 @@
-﻿package skid.ykow.font;
+package skid.ykow.font;
 
+import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import java.awt.Color;
 import java.awt.Font;
@@ -120,6 +121,10 @@ public final class GlyphPage {
          ByteBuffer data = BufferUtils.createByteBuffer(byteArray.length).put(byteArray);
          data.flip();
          this.texture = new NativeImageBackedTexture(NativeImage.read(data));
+         RenderSystem.setShaderTexture(0, this.texture.getGlId());
+         GlStateManager._texParameter(3553, 10240, 9729);
+         GlStateManager._texParameter(3553, 10241, 9729);
+         RenderSystem.setShaderTexture(0, 0);
       } catch (Throwable var4) {
          var4.printStackTrace(System.err);
       }

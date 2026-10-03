@@ -1,4 +1,4 @@
-﻿package skid.ykow.event;
+package skid.ykow.event;
 
 public abstract class CancellableEvent implements Event {
    private boolean cancelled = false;

@@ -1,4 +1,4 @@
-﻿package skid.ykow.font;
+package skid.ykow.font;
 
 import com.mojang.blaze3d.platform.GlStateManager;
 import skid.ykow.utils.EncryptedString;
@@ -52,11 +52,13 @@ public final class GlyphPageFontRenderer {
    }
 
    public static GlyphPageFontRenderer keyCodec(CharSequence font, int size, boolean bold, boolean italic, boolean boldItalic) {
-      char[] chars = new char[256];
+      char[] chars = new char[265];
 
       for (int i = 0; i < 256; i++) {
          chars[i] = (char)i;
       }
+      chars[256] = '✕'; chars[257] = '✎'; chars[258] = '‹'; chars[259] = '›';
+      chars[260] = '✓'; chars[261] = '←'; chars[262] = '→'; chars[263] = '◄'; chars[264] = '►';
 
       GlyphPage regularPage = new GlyphPage(new Font(font.toString(), 0, size), true, true);
       regularPage.generate(chars);
@@ -87,11 +89,13 @@ public final class GlyphPageFontRenderer {
 
    public static GlyphPageFontRenderer init(CharSequence id, int size, boolean bold, boolean italic, boolean boldItalic) {
       try {
-         char[] chars = new char[256];
+         char[] chars = new char[265];
 
-         for (int i = 0; i < chars.length; i++) {
+         for (int i = 0; i < 256; i++) {
             chars[i] = (char)i;
          }
+         chars[256] = '✕'; chars[257] = '✎'; chars[258] = '‹'; chars[259] = '›';
+         chars[260] = '✓'; chars[261] = '←'; chars[262] = '→'; chars[263] = '◄'; chars[264] = '►';
 
          Font font = Font.createFont(0, Objects.requireNonNull(GlyphPageFontRenderer.class.getResourceAsStream(id.toString()))).deriveFont(0, size);
          GlyphPage regularPage = new GlyphPage(font, true, true);
@@ -221,7 +225,6 @@ public final class GlyphPageFontRenderer {
       GlStateManager._enableBlend();
       GlStateManager._blendFunc(770, 771);
       page.bind();
-      GlStateManager._texParameter(3553, 10240, 9729);
 
       for (int i = 0; i < text.length(); i++) {
          char ch = text.charAt(i);
@@ -283,7 +286,6 @@ public final class GlyphPageFontRenderer {
       GlStateManager._enableBlend();
       GlStateManager._blendFunc(770, 771);
       page.bind();
-      GlStateManager._texParameter(3553, 10240, 9729);
 
       for (int i = 0; i < text.length(); i++) {
          char ch = text.charAt(i);

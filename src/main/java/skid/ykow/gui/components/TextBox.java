@@ -1,4 +1,4 @@
-﻿package skid.ykow.gui.components;
+package skid.ykow.gui.components;
 
 import skid.ykow.gui.Component;
 import skid.ykow.module.setting.Setting;

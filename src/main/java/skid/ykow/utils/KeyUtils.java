@@ -1,4 +1,4 @@
-﻿package skid.ykow.utils;
+package skid.ykow.utils;
 
 import skid.ykow.Ykow;
 import org.apache.commons.lang3.StringUtils;

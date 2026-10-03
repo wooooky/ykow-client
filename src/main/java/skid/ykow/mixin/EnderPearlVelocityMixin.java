@@ -1,4 +1,4 @@
-﻿package skid.ykow.mixin;
+package skid.ykow.mixin;
 
 import skid.ykow.module.modules.misc.PearlBoost;
 import net.minecraft.entity.projectile.thrown.EnderPearlEntity;

@@ -1,4 +1,4 @@
-﻿package skid.ykow.module.setting;
+package skid.ykow.module.setting;
 
 import net.minecraft.item.Item;
 

@@ -1,4 +1,4 @@
-﻿package skid.ykow.gui.components;
+package skid.ykow.gui.components;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import skid.ykow.Ykow;

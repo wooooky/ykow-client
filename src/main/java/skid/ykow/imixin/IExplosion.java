@@ -1,4 +1,4 @@
-﻿package skid.ykow.imixin;
+package skid.ykow.imixin;
 
 import net.minecraft.util.math.Vec3d;
 

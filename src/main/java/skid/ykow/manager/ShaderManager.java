@@ -1,4 +1,4 @@
-﻿package skid.ykow.manager;
+package skid.ykow.manager;
 
 import java.io.IOException;
 import java.nio.FloatBuffer;

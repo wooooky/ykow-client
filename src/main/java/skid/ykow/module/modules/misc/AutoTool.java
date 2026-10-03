@@ -1,4 +1,4 @@
-﻿package skid.ykow.module.modules.misc;
+package skid.ykow.module.modules.misc;
 
 import skid.ykow.event.EventListener;
 import skid.ykow.event.events.AttackBlockEvent;

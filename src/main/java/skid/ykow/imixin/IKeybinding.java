@@ -1,4 +1,4 @@
-﻿package skid.ykow.imixin;
+package skid.ykow.imixin;
 
 public interface IKeybinding {
    boolean ykow$isActuallyPressed();

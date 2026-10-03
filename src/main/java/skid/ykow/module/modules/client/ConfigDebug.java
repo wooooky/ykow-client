@@ -1,4 +1,4 @@
-﻿package skid.ykow.module.modules.client;
+package skid.ykow.module.modules.client;
 
 import skid.ykow.Ykow;
 import skid.ykow.module.Category;

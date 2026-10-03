@@ -1,4 +1,4 @@
-﻿package skid.ykow.module;
+package skid.ykow.module;
 
 import skid.ykow.event.EventListener;
 import skid.ykow.event.events.KeyEvent;

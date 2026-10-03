@@ -1,4 +1,4 @@
-﻿package skid.ykow.module.modules.movement;
+package skid.ykow.module.modules.movement;
 
 import skid.ykow.Ykow;
 import skid.ykow.event.EventListener;

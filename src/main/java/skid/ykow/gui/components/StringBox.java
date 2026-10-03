@@ -1,4 +1,4 @@
-﻿package skid.ykow.gui.components;
+package skid.ykow.gui.components;
 
 import skid.ykow.module.modules.client.Ykow;
 import skid.ykow.module.setting.StringSetting;

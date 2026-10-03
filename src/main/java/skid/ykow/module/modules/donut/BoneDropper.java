@@ -1,4 +1,4 @@
-﻿package skid.ykow.module.modules.donut;
+package skid.ykow.module.modules.donut;
 
 import skid.ykow.event.EventListener;
 import skid.ykow.event.events.TickEvent;

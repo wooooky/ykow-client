@@ -1,4 +1,4 @@
-﻿package skid.ykow.utils;
+package skid.ykow.utils;
 
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;

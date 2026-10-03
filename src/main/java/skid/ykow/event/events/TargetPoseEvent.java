@@ -1,4 +1,4 @@
-﻿package skid.ykow.event.events;
+package skid.ykow.event.events;
 
 import skid.ykow.event.CancellableEvent;
 import net.minecraft.entity.Entity;

@@ -1,4 +1,4 @@
-﻿package skid.ykow.utils.packets;
+package skid.ykow.utils.packets;
 
 public class CooldownTimer {
    private long cooldownDuration;

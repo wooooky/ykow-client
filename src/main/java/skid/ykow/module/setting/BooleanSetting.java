@@ -1,4 +1,4 @@
-﻿package skid.ykow.module.setting;
+package skid.ykow.module.setting;
 
 public final class BooleanSetting extends Setting {
    private boolean value;

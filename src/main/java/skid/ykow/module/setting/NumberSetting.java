@@ -1,4 +1,4 @@
-﻿package skid.ykow.module.setting;
+package skid.ykow.module.setting;
 
 public final class NumberSetting extends Setting {
    private final double min;

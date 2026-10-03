@@ -1,4 +1,4 @@
-﻿package skid.ykow.mixin;
+package skid.ykow.mixin;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import skid.ykow.module.modules.misc.TridentBoost;

@@ -1,4 +1,4 @@
-﻿package skid.ykow.mixin;
+package skid.ykow.mixin;
 
 import skid.ykow.event.events.Render2DEvent;
 import skid.ykow.manager.EventManager;

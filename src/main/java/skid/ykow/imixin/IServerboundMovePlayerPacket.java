@@ -1,4 +1,4 @@
-﻿package skid.ykow.imixin;
+package skid.ykow.imixin;
 
 public interface IServerboundMovePlayerPacket {
    void setYRot(float var1);
