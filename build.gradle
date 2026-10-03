@@ -1,0 +1,44 @@
+plugins {
+    id 'fabric-loom' version '1.10-SNAPSHOT'
+    id 'maven-publish'
+}
+
+version = project.mod_version
+group = project.maven_group
+
+base {
+    archivesName = project.archives_base_name
+}
+
+repositories {
+    mavenCentral()
+    maven { url 'https://jitpack.io' }
+}
+
+dependencies {
+    minecraft "com.mojang:minecraft:${project.minecraft_version}"
+    mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
+    modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+    modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+    // DiscordRPC - embedded via Loom Jar-in-Jar ('include'); transitive=false to avoid bundling slf4j (provided by Minecraft)
+    modImplementation(include('com.github.jagrosh:DiscordIPC:master-SNAPSHOT')) { transitive = false }
+    modImplementation(include('org.json:json:20230227')) { transitive = false }
+    modImplementation(include('com.kohlschutter.junixsocket:junixsocket-common:2.6.2')) { transitive = false }
+    modImplementation(include('com.kohlschutter.junixsocket:junixsocket-native-common:2.6.2')) { transitive = false }
+}
+
+processResources {
+    inputs.property "version", project.version
+
+    filesMatching("fabric.mod.json") {
+        expand "version": project.version
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    it.options.release = 21
+}
+
+java {
+    targetCompatibility = JavaVersion.VERSION_17
+}
