@@ -266,10 +266,14 @@ public final class ClickGUI extends Screen {
       int titleY = this.guiY + 24;
       RenderUtils.renderCircle(context.getMatrices(), ACCENT_PRIMARY, titleX + 12, titleY + 12, 12.0, 32);
       RenderUtils.renderCircle(context.getMatrices(), ACCENT_GLOW, titleX + 12, titleY + 12, 8.0, 32);
-      TextRenderer.drawString("YKOW", context, titleX + 38, titleY + 3, TEXT_PRIMARY.getRGB());
-      TextRenderer.drawString("CLIENT", context, titleX + 38, titleY + 14, TEXT_MUTED.getRGB());
+      MatrixStack titleMatrices = context.getMatrices();
+      titleMatrices.push();
+      titleMatrices.translate(titleX + 38, titleY, 0.0F);
+      titleMatrices.scale(1.4F, 1.4F, 1.0F);
+      TextRenderer.drawString("ykow", context, 0, 0, TEXT_PRIMARY.getRGB());
+      titleMatrices.pop();
       int versionX = titleX + 130;
-      int versionY = titleY + 5;
+      int versionY = titleY - 1;
       RenderUtils.renderRoundedQuadShader(
          context.getMatrices(),
          new Color(ACCENT_PRIMARY.getRed(), ACCENT_PRIMARY.getGreen(), ACCENT_PRIMARY.getBlue(), 80),
@@ -280,7 +284,7 @@ public final class ClickGUI extends Screen {
          9.0,
          60.0
       );
-      TextRenderer.drawCenteredString("v1.3", context, versionX + 25, versionY + 5, ACCENT_GLOW.getRGB());
+      TextRenderer.drawCenteredString("1.1", context, versionX + 25, versionY + 5, ACCENT_GLOW.getRGB());
       int btnY = this.guiY + 18;
       int closeX = this.guiX + 980 - 20 - 36;
       boolean closeHovered = this.isPointInRect(mouseX, mouseY, closeX, btnY, 36, 36);
@@ -338,17 +342,9 @@ public final class ClickGUI extends Screen {
          }
 
          int textX = iconX + 20;
-         int textY = contentY + 20;
+         int textY = contentY + 17;
          Color textColor = isSelected ? TEXT_PRIMARY : TEXT_SECONDARY;
          TextRenderer.drawString(cat.name, context, textX, textY, textColor.getRGB());
-         int moduleCount = skid.ykow.Ykow.INSTANCE.getModuleManager().keyCodec(cat).size();
-         String countStr = String.valueOf(moduleCount);
-         int badgeW = 32;
-         int badgeX = btnX + btnW - badgeW - 8;
-         int badgeY = contentY + 16;
-         Color badgeBg = isSelected ? new Color(BG_DEEPEST.getRed(), BG_DEEPEST.getGreen(), BG_DEEPEST.getBlue(), 150) : BG_ELEVATED;
-         RenderUtils.renderRoundedQuadShader(context.getMatrices(), badgeBg, badgeX, badgeY, badgeW, 20.0, 10.0, 50.0);
-         TextRenderer.drawCenteredString(countStr, context, badgeX + 16, badgeY + 6, TEXT_MUTED.getRGB());
          contentY += 58;
       }
    }
@@ -380,7 +376,7 @@ public final class ClickGUI extends Screen {
       }
 
       int iconX = searchX + 18;
-      int iconY = searchY + 20;
+      int iconY = searchY + 16;
       this.renderSearchIcon(context, iconX, iconY, TEXT_SECONDARY);
       String displayText = this.searchQuery.isEmpty() ? "Search modules..." : this.searchQuery;
       Color textColor = this.searchQuery.isEmpty() ? TEXT_DIM : TEXT_PRIMARY;
@@ -523,7 +519,7 @@ public final class ClickGUI extends Screen {
 
             RenderUtils.renderCircle(context.getMatrices(), statusColor, statusX, statusY, 6.0, 32);
             int nameX = statusX + 20;
-            int nameY = cardY + liftOffset + 15;
+            int nameY = cardY + liftOffset + 12;
             String moduleName = module.getName().toString();
             if (TextRenderer.getWidth(moduleName) > cardW - 58) {
                while (TextRenderer.getWidth(moduleName + "...") > cardW - 58 && moduleName.length() > 1) {

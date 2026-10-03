@@ -4,6 +4,7 @@ import skid.ykow.Ykow;
 import skid.ykow.event.events.Render3DEvent;
 import skid.ykow.manager.EventManager;
 import skid.ykow.module.modules.misc.Freecam;
+import skid.ykow.module.modules.render.MotionBlur;
 import net.minecraft.client.render.Camera;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.render.RenderTickCounter;
@@ -41,6 +42,22 @@ public abstract class GameRendererMixin {
       EventManager.elementCodec(
          new Render3DEvent(new MatrixStack(), this.getBasicProjectionMatrix(this.getFov(this.camera, rtc.getTickDelta(true), true)), rtc.getTickDelta(true))
       );
+   }
+
+   @Inject(
+      method = {"renderWorld"},
+      at = {@At("HEAD")}
+   )
+   private void onRenderWorldStart(RenderTickCounter rtc, CallbackInfo ci) {
+      MotionBlur.onRenderStart();
+   }
+
+   @Inject(
+      method = {"renderWorld"},
+      at = {@At("TAIL")}
+   )
+   private void onRenderWorldEnd(RenderTickCounter rtc, CallbackInfo ci) {
+      MotionBlur.onRenderEnd();
    }
 
    @Inject(

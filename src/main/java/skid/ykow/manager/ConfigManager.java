@@ -21,6 +21,8 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import net.minecraft.item.Item;
 import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
@@ -28,6 +30,7 @@ import net.minecraft.util.Identifier;
 public final class ConfigManager {
    private JsonObject jsonObject;
    private final File configFile;
+   private final File backupFile;
    private final Gson gson;
 
    public ConfigManager() {
@@ -39,9 +42,24 @@ public final class ConfigManager {
       }
 
       this.configFile = new File(configFolder, "ykow_config.json");
+      this.backupFile = new File(configFolder, "ykow_config.json.bak");
+      this.importLegacyConfig(configFolder);
       this.gson = new GsonBuilder().setPrettyPrinting().create();
       this.jsonObject = new JsonObject();
       this.loadConfigFromFile();
+   }
+
+   private void importLegacyConfig(File configFolder) {
+      if (!this.configFile.exists()) {
+         File legacy = new File(configFolder, "krypton_config.json");
+         if (legacy.exists()) {
+            try {
+               Files.copy(legacy.toPath(), this.configFile.toPath());
+            } catch (IOException var4) {
+               System.err.println("[ConfigManager] Error importing legacy config: " + var4.getMessage());
+            }
+         }
+      }
    }
 
    private void loadConfigFromFile() {
@@ -53,14 +71,39 @@ public final class ConfigManager {
                   this.jsonObject = new JsonObject();
                }
             }
+         } else if (this.backupFile.exists()) {
+            try (FileReader reader = new FileReader(this.backupFile)) {
+               this.jsonObject = (JsonObject)this.gson.fromJson(reader, JsonObject.class);
+               if (this.jsonObject == null) {
+                  this.jsonObject = new JsonObject();
+               }
+            }
          } else {
             this.jsonObject = new JsonObject();
          }
       } catch (Exception var6) {
          System.err.println("[ConfigManager] Error loading config file: " + var6.getMessage());
          var6.printStackTrace();
-         this.jsonObject = new JsonObject();
+         this.jsonObject = this.loadBackup();
       }
+   }
+
+   private JsonObject loadBackup() {
+      try {
+         if (this.backupFile.exists()) {
+            try (FileReader reader = new FileReader(this.backupFile)) {
+               JsonObject backup = (JsonObject)this.gson.fromJson(reader, JsonObject.class);
+               if (backup != null) {
+                  System.err.println("[ConfigManager] Loaded config from backup file");
+                  return backup;
+               }
+            }
+         }
+      } catch (Exception var4) {
+         System.err.println("[ConfigManager] Error loading backup config file: " + var4.getMessage());
+      }
+
+      return new JsonObject();
    }
 
    public void loadProfile() {
@@ -76,6 +119,9 @@ public final class ConfigManager {
             try {
                String moduleName = this.getModuleName(next);
                JsonElement value = this.jsonObject.get(moduleName);
+               if (value == null && moduleName.equals("ykow")) {
+                  value = this.jsonObject.get("Gypsyy");
+               }
                if (value != null && value.isJsonObject()) {
                   JsonObject asJsonObject = value.getAsJsonObject();
                   JsonElement value2 = asJsonObject.get("enabled");
@@ -188,6 +234,14 @@ public final class ConfigManager {
          File parentDir = this.configFile.getParentFile();
          if (parentDir != null && !parentDir.exists()) {
             parentDir.mkdirs();
+         }
+
+         if (this.configFile.exists()) {
+            try {
+               Files.copy(this.configFile.toPath(), this.backupFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+            } catch (IOException var7) {
+               System.err.println("[ConfigManager] Error writing backup config file: " + var7.getMessage());
+            }
          }
 
          try (FileWriter writer = new FileWriter(this.configFile)) {
