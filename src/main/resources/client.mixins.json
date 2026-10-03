@@ -1,0 +1,50 @@
+﻿{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "skid.ykow.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "ClientConnectionMixin",
+    "EntityMixin",
+    "LivingEntityMixin"
+  ],
+  "client": [
+    "CameraMixin",
+    "ClientPlayerEntityMixin",
+    "ClientPlayerInteractionManagerAccessor",
+    "ClientPlayerInteractionManagerMixin",
+    "FrustumAccessor",
+    "GameRendererMixin",
+    "InGameHudMixin",
+    "KeyBindingAccessor",
+    "KeyBindingMixin",
+    "KeyboardMixin",
+    "MinecraftClientAccessor",
+    "MinecraftClientMixin",
+    "ScreenMixin",
+    "EntityRenderDispatcherMixin",
+    "CountPlacementModifierAccessor",
+    "HeightRangePlacementModifierAccessor",
+    "RarityFilterPlacementModifierAccessor",
+    "HeightContextMixin",
+    "ClientPlayNetworkHandlerMixin",
+    "WorldChunkMixin",
+    "HandledScreenMixin",
+    "MobSpawnerLogicAccessor",
+    "MouseMixin",
+    "ChunkOcclusionDataBuilderMixin",
+    "TextVisitFactoryMixin",
+    "TitleScreenMixin",
+    "ParticleManagerMixin",
+    "ExplosionMixin",
+    "HeldItemRendererMixin",
+    "EntityRendererMixin",
+    "ItemStackMixin",
+    "TridentItemMixin",
+    "EnderPearlVelocityMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "refmap": "ykow-refmap.json"
+}

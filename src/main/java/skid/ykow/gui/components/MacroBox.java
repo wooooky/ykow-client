@@ -1,0 +1,120 @@
+﻿package skid.ykow.gui.components;
+
+import skid.ykow.gui.Component;
+import skid.ykow.module.setting.MacroSetting;
+import skid.ykow.module.setting.Setting;
+import skid.ykow.utils.ColorUtil;
+import skid.ykow.utils.MathUtil;
+import skid.ykow.utils.RenderUtils;
+import skid.ykow.utils.TextRenderer;
+import skid.ykow.utils.Utils;
+import java.awt.Color;
+import net.minecraft.client.gui.DrawContext;
+
+public class MacroBox extends Component {
+   private final MacroSetting setting;
+   private float hoverAnimation;
+   private Color currentColor;
+   private final Color TEXT_COLOR;
+   private final Color HOVER_COLOR;
+   private final Color CAT_BG;
+   private final Color CAT_BORDER;
+   private final Color CAT_EAR_COLOR;
+   private final Color CAT_FACE_COLOR;
+   private final float CORNER_RADIUS = 4.0F;
+   private final float HOVER_ANIMATION_SPEED = 0.25F;
+
+   public MacroBox(ModuleButton moduleButton, Setting setting, int n) {
+      super(moduleButton, setting, n);
+      this.hoverAnimation = 0.0F;
+      this.TEXT_COLOR = new Color(230, 230, 230);
+      this.HOVER_COLOR = new Color(255, 255, 255, 20);
+      this.CAT_BG = new Color(60, 60, 65);
+      this.CAT_BORDER = new Color(80, 80, 85);
+      this.CAT_EAR_COLOR = new Color(100, 100, 105);
+      this.CAT_FACE_COLOR = new Color(120, 120, 125);
+      this.setting = (MacroSetting)setting;
+   }
+
+   @Override
+   public void onUpdate() {
+      Color mainColor = Utils.getMainColor(255, this.parent.settings.indexOf(this));
+      if (this.currentColor == null) {
+         this.currentColor = new Color(mainColor.getRed(), mainColor.getGreen(), mainColor.getBlue(), 0);
+      } else {
+         this.currentColor = new Color(mainColor.getRed(), mainColor.getGreen(), mainColor.getBlue(), this.currentColor.getAlpha());
+      }
+
+      if (this.currentColor.getAlpha() != 255) {
+         this.currentColor = ColorUtil.keyCodec(0.05F, 255, this.currentColor);
+      }
+
+      super.onUpdate();
+   }
+
+   @Override
+   public void render(DrawContext drawContext, int n, int n2, float n3) {
+      super.render(drawContext, n, n2, n3);
+      this.updateAnimations(n, n2, n3);
+      if (!this.parent.parent.dragging) {
+         drawContext.fill(
+            this.parentX(),
+            this.parentY() + this.parentOffset() + this.offset,
+            this.parentX() + this.parentWidth(),
+            this.parentY() + this.parentOffset() + this.offset + this.parentHeight(),
+            new Color(
+                  this.HOVER_COLOR.getRed(), this.HOVER_COLOR.getGreen(), this.HOVER_COLOR.getBlue(), (int)(this.HOVER_COLOR.getAlpha() * this.hoverAnimation)
+               )
+               .getRGB()
+         );
+      }
+
+      int n4 = this.parentX() + 5;
+      int n5 = this.parentY() + this.parentOffset() + this.offset + this.parentHeight() / 2;
+      TextRenderer.drawString(String.valueOf(this.setting.getName()), drawContext, n4, n5 - 8, this.TEXT_COLOR.getRGB());
+      int n6 = n4 + TextRenderer.getWidth(this.setting.getName() + ": ") + 5;
+      int n7 = n5 - 11;
+      RenderUtils.renderRoundedQuad(drawContext.getMatrices(), this.CAT_BORDER, n6, n7, n6 + 20, n7 + 20, 4.0, 4.0, 4.0, 4.0, 50.0);
+      RenderUtils.renderRoundedQuad(drawContext.getMatrices(), this.CAT_BG, n6 + 1, n7 + 1, n6 + 20 - 1, n7 + 20 - 1, 3.5, 3.5, 3.5, 3.5, 50.0);
+      drawContext.fill(n6 + 3, n7 + 2, n6 + 7, n7 + 6, this.CAT_EAR_COLOR.getRGB());
+      drawContext.fill(n6 + 15, n7 + 2, n6 + 19, n7 + 6, this.CAT_EAR_COLOR.getRGB());
+      drawContext.fill(n6 + 8, n7 + 8, n6 + 14, n7 + 14, this.CAT_FACE_COLOR.getRGB());
+      drawContext.fill(n6 + 9, n7 + 9, n6 + 11, n7 + 11, Color.BLACK.getRGB());
+      drawContext.fill(n6 + 11, n7 + 9, n6 + 13, n7 + 11, Color.BLACK.getRGB());
+      drawContext.fill(n6 + 10, n7 + 12, n6 + 12, n7 + 13, Color.PINK.getRGB());
+      int commandCount = this.setting.getCommands().size();
+      if (commandCount > 0) {
+         String countText = String.valueOf(commandCount);
+         TextRenderer.drawCenteredString(countText, drawContext, n6 + 11, n7 + 16, Color.WHITE.getRGB());
+      } else {
+         TextRenderer.drawCenteredString("?", drawContext, n6 + 11, n7 + 16, new Color(150, 150, 150, 200).getRGB());
+      }
+   }
+
+   private void updateAnimations(int n, int n2, float n3) {
+      float n4;
+      if (this.isHovered(n, n2) && !this.parent.parent.dragging) {
+         n4 = 1.0F;
+      } else {
+         n4 = 0.0F;
+      }
+
+      this.hoverAnimation = (float)MathUtil.exponentialInterpolate(this.hoverAnimation, n4, 0.25, n3 * 0.05F);
+   }
+
+   @Override
+   public void mouseClicked(double n, double n2, int n3) {
+      if (this.isHovered(n, n2) && n3 == 0) {
+         this.mc.setScreen(new MacroFilter(this, this.setting));
+      }
+
+      super.mouseClicked(n, n2, n3);
+   }
+
+   @Override
+   public void onGuiClose() {
+      this.currentColor = null;
+      this.hoverAnimation = 0.0F;
+      super.onGuiClose();
+   }
+}
